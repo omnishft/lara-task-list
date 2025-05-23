@@ -13,6 +13,8 @@
         - [ ] docker compose exec app bash --when entering a container remember to always use the service name and not the container name
         - [ ] Give read and write permissions
             - [ ] chmod -R a+rw .
-- [ ] Ensure proper db connection
-    - [ ] 
+- [ ] Connect to database
+    - [ ] change .env dbhost= <db service name in docker>
+    - [ ] docker compose run --rm artisan db:show
+    - [ ] docker compose run --rm artisan migrate
 

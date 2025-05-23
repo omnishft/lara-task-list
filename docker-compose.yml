@@ -12,6 +12,8 @@ services:
     depends_on:
       - app
       - db
+    networks:
+      - lara-network
   #app
   app:
     container_name: lara-task-app
@@ -20,12 +22,18 @@ services:
       dockerfile: php.dockerfile
     volumes:
       - ./src:/var/www/html:delegated
+    networks:
+      - lara-network
   #db
   db:
     container_name: lara-task-db
     image: mysql:8
+    ports:
+      - "3306:3306"
     env_file:
       - ./env/mysql.env
+    networks:
+      - lara-network
   #composer
   composer:
     build:
@@ -33,6 +41,8 @@ services:
       dockerfile: composer.dockerfile
     volumes:
       - ./src:/var/www/html:delegated
+    networks:
+      - lara-network
   #artisan
   artisan:
     build:
@@ -40,7 +50,9 @@ services:
       dockerfile: php.dockerfile
     volumes:
       - ./src:/var/www/html:delegated
-    entrypoint: ["php","var/www/html/artisan"]
+    entrypoint: ["php","/var/www/html/artisan"]
+    networks:
+      - lara-network
   #npm
   npm:
     image: node:latest
@@ -48,3 +60,9 @@ services:
     entrypoint: ["npm"]
     volumes: 
         - ./src:/var/www/html:delegated
+    networks:
+      - lara-network
+networks:
+  lara-network:
+    driver: bridge
+
