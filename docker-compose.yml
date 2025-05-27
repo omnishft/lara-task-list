@@ -48,9 +48,10 @@ services:
     build:
       context: ./php
       dockerfile: php.dockerfile
+    working_dir: /var/www/html
     volumes:
       - ./src:/var/www/html:delegated
-    entrypoint: ["php","/var/www/html/artisan"]
+    entrypoint: ["php","artisan"]
     networks:
       - lara-network
   #npm
